@@ -1,20 +1,16 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(homey-gateway)
+project(homey-gateway LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(includes)
+include(FetchContent)
+FetchContent_Declare(gattlib
+        GIT_REPOSITORY    git@github.com:labapart/gattlib.git
+        )
+FetchContent_MakeAvailable(gattlib)
 
-find_package(PkgConfig REQUIRED)
-
-pkg_search_module(GATTLIB REQUIRED gattlib)
-pkg_search_module(GLIB REQUIRED glib-2.0)
-pkg_search_module(PCRE REQUIRED libpcre)
-
-include_directories(${GLIB_INCLUDE_DIRS})
-
-set(SOURCES src/main.cpp src/Device.cpp)
-
-add_executable(homey-gateway ${SOURCES})
-target_link_libraries(homey-gateway ${GATTLIB_LIBRARIES} ${GATTLIB_LDFLAGS} ${GLIB_LDFLAGS} ${PCRE_LIBRARIES} pthread)
+add_executable(homey-gateway src/main.cpp src/Device.cpp)
+target_link_libraries(homey-gateway gattlib)

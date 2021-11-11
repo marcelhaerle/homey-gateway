@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "Device.h"
+#include "Device.hpp"
 
 using std::string;
 using std::cout;

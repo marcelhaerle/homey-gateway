@@ -1,4 +1,4 @@
-#include "Device.h"
+#include "Device.hpp"
 #include <algorithm>
 
 using std::string;
